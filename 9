@@ -1,0 +1,27 @@
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+cap = cv2.VideoCapture("/content/cv exp 2.mp4")
+src_points = np.float32([
+    (100, 100),
+    (100, 400),
+    (400, 100),
+    (400, 400)
+])
+dst_points = np.float32([
+    (0, 0),
+    (0, 300),
+    (400, 0),
+    (400, 300)
+])
+matrix = cv2.getPerspectiveTransform(src_points, dst_points)
+while cap.isOpened():
+    ret, frame = cap.read()
+    if not ret:
+        break
+    warped = cv2.warpPerspective(frame, matrix, (400, 300))
+    cv2_imshow(warped) # Changed from cv2.imshow to cv2_imshow
+    if cv2.waitKey(1) & 0xFF == ord('s'):
+        break
+cap.release()
+cv2.destroyAllWindows()
