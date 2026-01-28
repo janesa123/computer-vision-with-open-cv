@@ -1,0 +1,11 @@
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+image = cv2.imread('/content/cv exp 1.b.png')
+if image is not None:
+    kernel = np.ones((5, 5), np.uint8)
+    gradient_image = cv2.morphologyEx(image, cv2.MORPH_GRADIENT, kernel)
+    cv2_imshow(image)
+    cv2_imshow(gradient_image)
+else:
+    print('Error: Could not load image. Please ensure the file exists.')
