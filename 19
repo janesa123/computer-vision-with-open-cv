@@ -1,0 +1,10 @@
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+image = cv2.imread('/content/cv exp 1.b.png')
+if image is not None:
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (0, 0), 3)
+    unsharp_mask = cv2.addWeighted(gray, 1.5, blurred, -0.5, 0)
+    cv2_imshow(image); cv2_imshow(unsharp_mask)
+else: print("Error: Could not load image.")
