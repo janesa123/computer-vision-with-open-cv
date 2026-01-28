@@ -1,0 +1,23 @@
+import cv2
+from google.colab.patches import cv2_imshow
+image_path = '/content/cv exp1.a.jpeg'
+image = cv2.imread(image_path)
+if image is None:
+    print(f"Error: Could not load image from {image_path}. Please check the path.")
+else:
+    print("Original Image:")
+    cv2_imshow(image)
+    scale_factor_bigger = 1.5
+    new_width_bigger = int(image.shape[1] * scale_factor_bigger)
+    new_height_bigger = int(image.shape[0] * scale_factor_bigger)
+    bigger_image = cv2.resize(image, (new_width_bigger, new_height_bigger),
+                               interpolation=cv2.INTER_LINEAR)
+    print("\nBigger Image (scaled by 1.5x):")
+    cv2_imshow(bigger_image)
+    scale_factor_smaller = 0.5
+    new_width_smaller = int(image.shape[1] * scale_factor_smaller)
+    new_height_smaller = int(image.shape[0] * scale_factor_smaller)
+    smaller_image = cv2.resize(image, (new_width_smaller, new_height_smaller),
+                                interpolation=cv2.INTER_AREA)
+    print("\nSmaller Image (scaled by 0.5x):")
+    cv2_imshow(smaller_image)
