@@ -1,0 +1,7 @@
+import cv2
+from google.colab.patches import cv2_imshow
+image = cv2.imread(r"/content/cv exp 1.c.png")
+gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+edges = cv2.Canny(gray_image, 100, 200)
+cv2_imshow(image)
+cv2_imshow(edges)
