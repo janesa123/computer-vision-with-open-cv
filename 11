@@ -1,0 +1,17 @@
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+image_path = '/content/cv exp1.a.jpeg'
+img = cv2.imread(image_path)
+if img is None:
+    print(f"Error: Could not load image from {image_path}. Please ensure the file exists.")
+else:
+    rows, cols, ch = img.shape
+    src_pts = np.float32([[50, 50], [200, 50], [200, 200], [50, 200]])
+    dst_pts = np.float32([[10, 100], [200, 50], [250, 150], [100, 250]])
+    M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+    transformed_img = cv2.warpPerspective(img, M, (cols, rows))
+    print("Original Image:")
+    cv2_imshow(img)
+    print("\nTransformed Image (using DLT):")
+    cv2_imshow(transformed_img)
