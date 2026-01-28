@@ -1,0 +1,15 @@
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+image = cv2.imread('/content/cv exp 1.c.png')
+watermark = cv2.imread('/content/cv exp 1.b.png') 
+if image is not None and watermark is not None:
+    watermark = cv2.resize(watermark, (100, 100))
+    h_img, w_img, _ = image.shape
+    h_w, w_w, _ = watermark.shape
+    roi = image[h_img - h_w:h_img, w_img - w_w:w_img]
+    watermarked_image = cv2.addWeighted(roi, 1.0, watermark, 0.5, 0)
+    image[h_img - h_w:h_img, w_img - w_w:w_img] = watermarked_image
+    cv2_imshow(image)
+else:
+    print("Error: Could not load image(s). Please ensure both files exist.")
