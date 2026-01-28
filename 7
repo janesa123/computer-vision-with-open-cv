@@ -1,0 +1,11 @@
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+img = cv2.imread("/content/cv exp1.a.jpeg")
+rows, cols = img.shape[:2]
+src_pts = np.float32([[50, 50], [200, 50], [50, 200]])
+dst_pts = np.float32([[10, 100], [200, 50], [100, 250]])
+M = cv2.getAffineTransform(src_pts, dst_pts)
+affine_img = cv2.warpAffine(img, M, (cols, rows))
+cv2_imshow(img)
+cv2_imshow(affine_img)
