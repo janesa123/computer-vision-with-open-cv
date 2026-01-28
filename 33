@@ -1,0 +1,21 @@
+import cv2
+from google.colab.patches import cv2_imshow
+video_path = '/content/cv exp 2.mp4'
+cap = cv2.VideoCapture(video_path)
+if not cap.isOpened():
+    print(f"Error: Could not open video file at {video_path}. Please make sure the video file is uploaded to '/content/' or the path is correct.")
+else:
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    delay_ms = int(1000 / fps) if fps > 0 else 30
+    for i in range(total_frames - 1, 0, -1):
+        cap.set(cv2.CAP_PROP_POS_FRAMES, i)
+        ret, frame = cap.read()
+        if not ret:
+            break
+        cv2_imshow(frame)
+        if cv2.waitKey(delay_ms) & 0xFF == ord('q'):
+            break
+    cap.release()
+    cv2.destroyAllWindows()
+    print("Video played in reverse.")
