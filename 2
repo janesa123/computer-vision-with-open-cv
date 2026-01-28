@@ -1,0 +1,46 @@
+import cv2
+from google.colab.patches import cv2_imshow
+video_path = "/content/cv exp 2.mp4"
+cap = cv2.VideoCapture(video_path)
+if not cap.isOpened():
+    print(f"Error: Could not open video file at {video_path}")
+else:
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    if fps == 0:
+        fps = 30
+    delay_ms = int(1000 / fps)
+    print("\nDisplaying original speed video...")
+    cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        cv2_imshow(frame)
+        if cv2.waitKey(delay_ms) & 0xFF == ord('q'):
+            break
+    cv2.destroyAllWindows()
+    print("\nDisplaying slow motion video (half speed)...")
+    cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+    slow_delay_ms = int(delay_ms * 2)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        cv2_imshow(frame)
+        if cv2.waitKey(slow_delay_ms) & 0xFF == ord('q'):
+            break
+    cv2.destroyAllWindows()
+    print("\nDisplaying fast motion video (double speed)...")
+    cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+    fast_delay_ms = int(delay_ms * 0.5) if delay_ms > 0 else 1
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+        cv2_imshow(frame)
+        if cv2.waitKey(fast_delay_ms) & 0xFF == ord('q'):
+            break
+    cv2.destroyAllWindows()
+
+    cap.release()
+    print("\nVideo processing complete.")
