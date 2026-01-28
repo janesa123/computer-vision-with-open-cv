@@ -1,0 +1,25 @@
+from ultralytics import YOLO
+import cv2
+model = YOLO("yolov8n.pt")
+image = cv2.imread("frame_10.jpg")
+if image is None:
+    print("Error: Could not load image")
+    exit(1)
+results = model(image)
+detections = results[0].boxes
+count = 1
+for box in detections:
+    x1, y1, x2, y2 = box.xyxy[0].cpu().numpy().astype(int)
+    conf = box.conf[0].cpu().numpy()
+    cls = int(box.cls[0].cpu().numpy())
+    label = model.names[cls]
+    cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+    cv2.putText(image, f"{label} {conf:.2f}", (x1, y1-5),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0,255,0), 2)
+    object_roi = image[y1:y2, x1:x2]
+    cv2.imshow(f"Extracted Object {count}: {label}", object_roi)
+    count += 1
+print(f"Number of objects detected: {len(detections)}")
+cv2.imshow("Rectangular Detection & Extraction", image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
