@@ -1,0 +1,10 @@
+import cv2
+from google.colab.patches import cv2_imshow
+img_main = cv2.imread('/content/cv exp 1.d.png')
+img_to_copy = cv2.imread('/content/cv exp 1.b.png')
+if img_main is not None and img_to_copy is not None:
+    cropped_part = img_to_copy[0:100, 0:100]
+    img_main[0:cropped_part.shape[0], 0:cropped_part.shape[1]] = cropped_part
+    cv2_imshow(img_main)
+else:
+    print("Error: Could not load image(s). Please ensure the files exist.")
