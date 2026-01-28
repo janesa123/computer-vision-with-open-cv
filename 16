@@ -1,0 +1,10 @@
+import cv2, numpy as np
+from google.colab.patches import cv2_imshow
+image = cv2.imread('/content/cv exp 1.e.png')
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+laplacian_kernel = np.array([[0, 1, 0], [1, -4, 1], [0, 1, 0]], dtype=np.float32)
+laplacian_output = cv2.filter2D(gray, cv2.CV_64F, laplacian_kernel)
+gray_float64 = gray.astype(np.float64)
+sharpened_image = cv2.convertScaleAbs(cv2.addWeighted(gray_float64, 1.0, laplacian_output, -1.0, 0))
+cv2_imshow(image)
+cv2_imshow(sharpened_image)
