@@ -1,0 +1,13 @@
+import cv2
+from google.colab.patches import cv2_imshow
+image_path = '/content/cv exp 1.e.png'
+image = cv2.imread(image_path)
+if image is None:
+    print(f"Error: Could not load image from {image_path}. Please ensure the file exists.")
+else:
+    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    edges = cv2.Canny(gray_image, 100, 200)
+    print("Original Image:")
+    cv2_imshow(image)
+    print("\nCanny Edges:")
+    cv2_imshow(edges)
